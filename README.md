@@ -89,7 +89,7 @@ ok
      {20,{module2,function2}}]}
 ```
 
-# what is going on? (under the hood)
+# What is going on? (under the hood)
 Let's run above code snippet again:  
 ```erlang
 1> Hooks = my_hooks.        
@@ -112,8 +112,8 @@ ok
 Actually each Posthaste server process creates new Erlang module and adds every **hook** as an Erlang function to it. **key** is an argument of **hook** function and finally **callbacks** are in function body.
 
 
-# keep/dump (fast add/delete operation)
-Posthaste server process can keep delete/add requests and can dump them to **hooks** module after last request:  
+# Keep/Dump (fast add/delete operation)
+Posthaste server process can keep delete/add requests and can dump them to **hooks** module. This is faster, because we compile new module once instead of compile it per add/delete request:  
 ```erlang
 1> Hooks = my_hooks.
 my_hooks
