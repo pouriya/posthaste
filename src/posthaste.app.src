@@ -1,7 +1,7 @@
 {application
 ,posthaste
 ,[{description, "A hooking library"}
- ,{vsn, "0.1.0"}
+ ,{vsn, "18.5.19"}
  ,{applications, [kernel, stdlib]}
  ,{modules, [posthaste, posthaste_server, posthaste_code]}
  ,{maintainers, ["pouriya.jahanbakhsh@gmail.com"]}
