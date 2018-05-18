@@ -213,4 +213,4 @@ I love pull requests from everyone. But it's good to explain idea, feautre or bu
 **`BSD 3-Clause`**
 
 ### Hex version
-[`**18.5.19**`](https://hex.pm/packages/posthaste)
+[**`18.5.19`**](https://hex.pm/packages/posthaste)
