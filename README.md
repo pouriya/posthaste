@@ -1,3 +1,5 @@
+![directror travis test status](https://travis-ci.org/Pouriya-Jahanbakhsh/director.png?branch=master)
+
 # posthaste
 An Erlang/Elixir [hooking](https://en.wikipedia.org/wiki/Hooking) library.  
 
@@ -200,3 +202,15 @@ ok
 20> Hooks:qux().
 #{12345 => 2}
 ```
+
+### Contributing
+I love pull requests from everyone. But it's good to explain idea, feautre or bug in issues before.
+
+### Author
+**`pouriya.jahanbakhsh@gmail.com`**
+
+### License
+**`BSD 3-Clause`**
+
+### Hex version
+[`**18.5.19**`](https://hex.pm/packages/posthaste)
