@@ -1,5 +1,5 @@
 %%% ------------------------------------------------------------------------------------------------
-%%% Director is available for use under the following license, commonly known as the 3-clause (or
+%%% "Posthaste"is available for use under the following license, commonly known as the 3-clause (or
 %%% "modified") BSD license:
 %%%
 %%% Copyright (c) 2018-2019, Pouriya Jahanbakhsh
