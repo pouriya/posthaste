@@ -20,7 +20,7 @@ Finally each **key** has its own **callbacks**. **callbacks** is a list which ma
 -type callbacks :: [] | [callback()].
 -type  callback() :: {priority(), mf()}.
 -type   priority() :: non_neg_integer().
--type   mf :: {module(), atom()}.
+-type   mf() :: {module(), atom()}.
 ```
 Posthaste maps each **key** to its **callbacks** for each **hook**:
 ```erlang
@@ -202,6 +202,9 @@ ok
 20> Hooks:qux().
 #{12345 => 2}
 ```
+
+### Running benchmark
+Just export `ERL_POSTHASTE_BENCHMARK=1` and run ct tests.
 
 ### Contributing
 I love pull requests from everyone. But it's good to explain idea, feautre or bug in issues before.
