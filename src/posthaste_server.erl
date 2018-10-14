@@ -115,6 +115,7 @@ module(Name) when erlang:is_atom(Name) ->
 init(HookMod) ->
     case posthaste_code:load(HookMod) of
         ok ->
+            _ = erlang:process_flag(trap_exit, true),
             {ok, #?S{module = HookMod, requests = [], keep = false}};
         {error, Rsn} ->
             {stop, Rsn}
