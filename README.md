@@ -1,4 +1,4 @@
-![directror travis test status](https://travis-ci.org/Pouriya-Jahanbakhsh/director.png?branch=master)
+![posthaste travis test status](https://travis-ci.org/Pouriya-Jahanbakhsh/posthaste.png?branch=master)
 
 # posthaste
 An Erlang/Elixir [hooking](https://en.wikipedia.org/wiki/Hooking) library.  
