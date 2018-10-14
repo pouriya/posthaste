@@ -12,4 +12,4 @@ before_script:
     - kerl list installations
 
 script:
-  - make test
+  - make all
