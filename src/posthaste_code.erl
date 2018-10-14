@@ -536,10 +536,4 @@ underscore() ->
 
 
 abstract(Type, Args) ->
-    MaybeTree = erlang:apply(erl_syntax, Type, Args),
-    case erl_syntax:is_tree(MaybeTree) of
-        true ->
-            erl_syntax:revert(MaybeTree);
-        _ -> % false
-            MaybeTree
-    end.
+    erl_syntax:revert(erlang:apply(erl_syntax, Type, Args)).
