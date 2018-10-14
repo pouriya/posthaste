@@ -14,7 +14,8 @@
         ,'2'/1
         ,'3'/1
         ,'4'/1
-        ,'5'/1]).
+        ,'5'/1
+        ,'6'/1]).
 
 -include_lib("common_test/include/ct.hrl").
 -include_lib("eunit/include/eunit.hrl").
@@ -49,10 +50,15 @@ end_per_testcase(_TestCase, _Config) ->
 '1'(_) ->
     ?assertEqual({error, {invalid, [{module, ?NAME}]}},  posthaste_code:check_module(?NAME)),
     ?assertMatch({ok, _}, posthaste:start_link(?NAME)),
+    ?assertMatch(?NAME, posthaste:module(?NAME)),
+
     ?assertMatch({error, {already_started, _}}, posthaste:start(?NAME)),
+    ?assertMatch({error, {already_loaded, _}}, posthaste:start(gen_server)),
     ?assertMatch({error, {already_loaded, _}}, posthaste_code:load(?NAME)),
 
     ?assertEqual(ok,  posthaste_code:check_module(?NAME)),
+    _ = gen_server:cast(?NAME, oops),
+    _ = ?NAME ! oops,
     ?assertEqual(ok, gen_server:stop(?NAME)),
     ?assertMatch({error, {_, _}}, posthaste_code:unload(?NAME)),
     ?assertEqual({error, {invalid, [{module, ?NAME}]}},  posthaste_code:check_module(?NAME)),
@@ -358,3 +364,7 @@ end_per_testcase(_TestCase, _Config) ->
                       ,{Hook1Key1PMF3Priority, {Hook1Key1PMF3Module, Hook1Key1PMF3Function}}]}, posthaste:callbacks(?NAME, Hook1, Hook1Key1)),
     ?assertEqual(ok, gen_server:stop(?NAME)),
     ?assertEqual({error, {invalid, [{module, ?NAME}]}},  posthaste_code:check_module(?NAME)).
+
+
+'6'(_) ->
+    _ = posthaste_server:code_change(1, 2, 3).
