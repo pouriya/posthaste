@@ -5,6 +5,6 @@
  ,{applications, [kernel, stdlib]}
  ,{modules, [posthaste, posthaste_server, posthaste_code]}
  ,{maintainers, ["pouriya.jahanbakhsh@gmail.com"]}
- ,{licenses, ["BSD 3-Clause"]}
+ ,{licenses, ["UNLICENSED"]}
  ,{links, [{"GitHub", "https://github.com/pouriya-jahanbakhsh/posthaste"}
           ,{"Hex", "https://hex.pm/packages/posthaste"}]}]}.
