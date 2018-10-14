@@ -46,6 +46,7 @@
         ,start/1
         ,add/6
         ,callbacks/3
+        ,safe_callbacks/3
         ,delete/6
         ,keep/1
         ,dump/1
@@ -154,6 +155,16 @@ callbacks(name(), hook(), key()) ->
 %% @end
 callbacks(Name, Hook, Key) ->
     posthaste_code:callbacks(Name, Hook, Key).
+
+
+-spec
+safe_callbacks(name(), hook(), key()) ->
+    {'ok', callbacks()} | {'error', term()}.
+%% @doc
+%%     Yields callbacks of a key for a hook.
+%% @end
+safe_callbacks(Name, Hook, Key) ->
+    posthaste_code:safe_callbacks(Name, Hook, Key).
 
 
 -spec

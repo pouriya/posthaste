@@ -47,6 +47,7 @@
         ,update_handlers/2
         ,check_module/1
         ,callbacks/3
+        ,safe_callbacks/3
         ,hooks/1
         ,keys/2
         ,callback_count/3]).
@@ -125,7 +126,18 @@ delete_handler(Mod
     update_handler(delete, Mod, Hook, Key, CallbackMod, CallbackFunc, Priority).
 
 
-callbacks(Mod, Hook, Key) when erlang:is_atom(Mod) andalso ?is_hook(Hook) andalso ?is_key(Key)->
+callbacks(Mod, Hook, Key) when erlang:is_atom(Mod) andalso ?is_hook(Hook) andalso ?is_key(Key) ->
+    try
+        {ok, Mod:Hook(Key)}
+    catch
+        _:_ -> % undef
+            {ok, []}
+    end.
+
+
+safe_callbacks(Mod, Hook, Key) when erlang:is_atom(Mod) andalso
+                                    ?is_hook(Hook)      andalso
+                                    ?is_key(Key)             ->
     case check_module(Mod) of
         ok ->
             try
