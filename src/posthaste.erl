@@ -50,6 +50,7 @@
         ,delete/6
         ,keep/1
         ,dump/1
+        ,module/1
         ,hooks/1
         ,keys/2
         ,callback_count/3]).
