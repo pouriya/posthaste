@@ -148,6 +148,16 @@ dump(Name) ->
 
 
 -spec
+module(name()) ->
+    module().
+%% @doc
+%%     Gives the module name that process uses for hooks.
+%% @end
+module(Name) ->
+    posthaste_server:module(Name).
+
+
+-spec
 callbacks(name(), hook(), key()) ->
     {'ok', callbacks()} | {'error', term()}.
 %% @doc
