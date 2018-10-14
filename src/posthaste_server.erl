@@ -81,20 +81,20 @@ start(Name) when erlang:is_atom(Name)->
 
 
 add(Name, Hook, Key, Mod, Func, Priority) when erlang:is_atom(Name) andalso
-                                               ?is_hook(Hook) andalso
-                                               ?is_key(Key) andalso
-                                               erlang:is_atom(Mod) andalso
+                                               ?is_hook(Hook)       andalso
+                                               ?is_key(Key)         andalso
+                                               erlang:is_atom(Mod)  andalso
                                                erlang:is_atom(Func) andalso
-                                               ?is_priority(Priority) ->
+                                               ?is_priority(Priority)    ->
     gen_server:call(Name, {?ADD_TAG, {Hook, Key, Mod, Func, Priority}}, infinity).
 
 
 delete(Name, Hook, Key, Mod, Func, Priority) when erlang:is_atom(Name) andalso
-                                                  ?is_hook(Hook) andalso
-                                                  ?is_key(Key) andalso
-                                                  erlang:is_atom(Mod) andalso
+                                                  ?is_hook(Hook)       andalso
+                                                  ?is_key(Key)         andalso
+                                                  erlang:is_atom(Mod)  andalso
                                                   erlang:is_atom(Func) andalso
-                                                  ?is_priority(Priority) ->
+                                                  ?is_priority(Priority)    ->
     gen_server:call(Name, {?DELETE_TAG, {Hook, Key, Mod, Func, Priority}}, infinity).
 
 

@@ -103,12 +103,12 @@ add_handler(Mod
            ,Key
            ,CallbackMod
            ,CallbackFunc
-           ,Priority) when erlang:is_atom(Mod) andalso
-                           ?is_hook(Hook) andalso
-                           ?is_key(Key) andalso
-                           erlang:is_atom(CallbackMod) andalso
+           ,Priority) when erlang:is_atom(Mod)          andalso
+                           ?is_hook(Hook)               andalso
+                           ?is_key(Key)                 andalso
+                           erlang:is_atom(CallbackMod)  andalso
                            erlang:is_atom(CallbackFunc) andalso
-                           ?is_priority(Priority) ->
+                           ?is_priority(Priority)            ->
     update_handler(add, Mod, Hook, Key, CallbackMod, CallbackFunc, Priority).
 
 
@@ -117,12 +117,12 @@ delete_handler(Mod
               ,Key
               ,CallbackMod
               ,CallbackFunc
-              ,Priority) when erlang:is_atom(Mod) andalso
-                              ?is_hook(Hook) andalso
-                              ?is_key(Key) andalso
-                              erlang:is_atom(CallbackMod) andalso
+              ,Priority) when erlang:is_atom(Mod)          andalso
+                              ?is_hook(Hook)               andalso
+                              ?is_key(Key)                 andalso
+                              erlang:is_atom(CallbackMod)  andalso
                               erlang:is_atom(CallbackFunc) andalso
-                              ?is_priority(Priority) ->
+                              ?is_priority(Priority)            ->
     update_handler(delete, Mod, Hook, Key, CallbackMod, CallbackFunc, Priority).
 
 
@@ -177,8 +177,8 @@ keys(Mod, Hook) when erlang:is_atom(Mod) andalso ?is_hook(Hook) ->
 
 
 callback_count(Mod, Hook, Key) when erlang:is_atom(Mod) andalso
-                                    ?is_hook(Hook) andalso
-                                    ?is_key(Key)->
+                                    ?is_hook(Hook)      andalso
+                                    ?is_key(Key)             ->
     case check_module(Mod) of
         ok ->
             try Mod:Hook() of
@@ -223,11 +223,11 @@ update_handlers_2([{Action, {Hook
                             ,CallbackFunc
                             ,Priority}}|Updates]
                  ,Funcs) when (Action == add orelse Action == delete) andalso
-                              ?is_hook(Hook) andalso
-                              ?is_key(Key) andalso
-                              erlang:is_atom(CallbackMod) andalso
-                              erlang:is_atom(CallbackFunc) andalso
-                              ?is_priority(Priority) ->
+                              ?is_hook(Hook)                          andalso
+                              ?is_key(Key)                            andalso
+                              erlang:is_atom(CallbackMod)             andalso
+                              erlang:is_atom(CallbackFunc)            andalso
+                              ?is_priority(Priority)                       ->
     update_handlers_2(Updates, update_handler_2(Action
                                                ,Hook
                                                ,Key
@@ -503,9 +503,9 @@ function(Name, Clauses) when erlang:is_list(Clauses) ->
     abstract(function, [Name, Clauses]).
 
 
-clause(Args, Guards, Bodies) when erlang:is_list(Args) andalso
+clause(Args, Guards, Bodies) when erlang:is_list(Args)                            andalso
                                   (erlang:is_list(Guards) orelse Guards =:= none) andalso
-                                  erlang:is_list(Bodies) ->
+                                  erlang:is_list(Bodies)                               ->
     abstract(clause, [Args, Guards, Bodies]).
 
 
