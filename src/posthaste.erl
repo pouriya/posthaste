@@ -12,27 +12,26 @@
 %% Exports:
 
 %% API exports
--export([start_link/1
-        ,start/1
-        ,add/6
-        ,callbacks/3
-        ,safe_callbacks/3
-        ,delete/6
-        ,keep/1
-        ,dump/1
-        ,module/1
-        ,hooks/1
-        ,keys/2
-        ,callback_count/3]).
+-export([
+    start_link/1,
+    add/6,
+    delete/6,
+    handlers/3,
+    handlers/4,
+    has_hook/2,
+    has_key/3,
+    keys/2,
+    all/1
+]).
 
 %% -------------------------------------------------------------------------------------------------
 %% Types:
 
 -type name() :: atom().
 -type hook() :: atom().
--type key() :: atom() | binary() | integer().
--type callbacks() :: [] | [callback()].
--type  callback() :: {priority(), {module(), func()}}.
+-type key() :: atom() | binary() | number() | list() | tuple().
+-type handlers() :: [] | [handler()].
+-type  handler() :: {priority(), module(), func()}.
 -type   priority() :: non_neg_integer().
 -type   func() :: atom().
 
@@ -41,10 +40,11 @@
 -export_type([name/0
              ,hook/0
              ,key/0
-             ,callbacks/0
-             ,callback/0
+             ,handlers/0
+             ,handler/0
              ,priority/0
-             ,func/0]).
+             ,func/0
+             ,start_return/0]).
 
 %% -------------------------------------------------------------------------------------------------
 %% API:
@@ -59,18 +59,6 @@ start_link(name()) ->
 %% @end
 start_link(Name) ->
     posthaste_server:start_link(Name).
-
-
--spec
-start(name()) ->
-    start_return().
-%% @doc
-%%     Starts stand-alone hook server process.<br/>
-%%     Server process will load new module named <code>Name</code> then <code>Name</code> same as
-%%     one of loaded modules.
-%% @end
-start(Name) ->
-    posthaste_server:start(Name).
 
 
 -spec
@@ -96,83 +84,50 @@ delete(Name, Hook, Key, Mod, Func, Priority) ->
 
 
 -spec
-keep(name()) ->
-    'ok' | 'error'.
+handlers(name(), hook(), key()) ->
+    handlers().
 %% @doc
-%%     Turns server process to keep mode.<br/>
-%%     Then server will keep all add/delete requests. You have to call dump/1 to dump requests to
-%%     module. If server is already in keep mode, it yields <code>error</code>
+%%     Yields handlers of a key for a hook.
 %% @end
-keep(Name) ->
-    posthaste_server:keep(Name).
+handlers(Name, Hook, Key) ->
+    posthaste_server:handlers(Name, Hook, Key).
 
 
 -spec
-dump(name()) ->
-    'ok' | 'error' | {'error', term()}.
+handlers(name(), hook(), key(), boolean()) ->
+    handlers().
 %% @doc
-%%     Makes a request to server process to dump all requests to module.<br/>
-%%     If server is not in keep mode, it yields <code>error</code>
+%%     Yields handlers of a key for a hook.<br/>
+%%     Also if a hook does not exists, caller may request for adding it with
+%%     no handlers.
 %% @end
-dump(Name) ->
-    posthaste_server:dump(Name).
+handlers(Name, Hook, Key, Notify) ->
+    posthaste_server:handlers(Name, Hook, Key, Notify).
 
 
 -spec
-module(name()) ->
-    module().
-%% @doc
-%%     Gives the module name that process uses for hooks.
-%% @end
-module(Name) ->
-    posthaste_server:module(Name).
+has_hook(name(), hook()) ->
+    boolean().
+has_hook(Name, Hook) ->
+    posthaste_server:has_hook(Name, Hook).
 
 
 -spec
-callbacks(name(), hook(), key()) ->
-    {'ok', callbacks()} | {'error', term()}.
-%% @doc
-%%     Yields callbacks of a key for a hook.
-%% @end
-callbacks(Name, Hook, Key) ->
-    posthaste_code:callbacks(Name, Hook, Key).
-
-
--spec
-safe_callbacks(name(), hook(), key()) ->
-    {'ok', callbacks()} | {'error', term()}.
-%% @doc
-%%     Yields callbacks of a key for a hook.
-%% @end
-safe_callbacks(Name, Hook, Key) ->
-    posthaste_code:safe_callbacks(Name, Hook, Key).
-
-
--spec
-hooks(name()) ->
-    {'ok', [] | [hook()]} | {'error', term()}.
-%% @doc
-%%     Yields hooks of a hook module.
-%% @end
-hooks(Name) ->
-    posthaste_code:hooks(Name).
+has_key(name(), hook(), key()) ->
+    boolean().
+has_key(Name, Hook, Key) ->
+    posthaste_server:has_key(Name, Hook, Key).
 
 
 -spec
 keys(name(), hook()) ->
-    {'ok', [] | [key()]} | {'error', term()}.
-%% @doc
-%%     Yields keys of a hook.
-%% @end
+    [] | [key()].
 keys(Name, Hook) ->
-    posthaste_code:keys(Name, Hook).
+    posthaste_server:keys(Name, Hook).
 
 
 -spec
-callback_count(name(), hook(), key()) ->
-    {'ok', non_neg_integer()} | {'error', term()}.
-%% @doc
-%%     Yields callback count of a key for a hook.
-%% @end
-callback_count(Name, Hook, Key) ->
-    posthaste_code:callback_count(Name, Hook, Key).
+all(name()) ->
+    [] | [{hook(), [] | [{key(), handlers()}]}].
+all(Name) ->
+    posthaste_server:all(Name).
